@@ -14,16 +14,15 @@ var stringifyJSON = function(obj) {
     }
     return "[" + arrayOut.join(",") + "]";
   }
-
   if(typeof obj === 'object' && obj !== null){
     var objectOut = [];
 
     _.each(obj, function(value, key){
-      objectOut.push(stringifyJSON(value, key));
+      if (typeof value !== 'function' && value !== undefined){
+        objectOut.push(stringifyJSON(key) + ":" + stringifyJSON(value));
+      } 
     });
-    return "{" + objectOut.join(",") + "}";
+    return "{" + objectOut.join() + "}";
   }
   return "" + obj;
-
-  // your code goes here
 };
